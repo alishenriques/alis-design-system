@@ -19,9 +19,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alis/design-system@workspace:.":
+"@alishenriques/design-system@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@alis/design-system@workspace:."
+  resolution: "@alishenriques/design-system@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.36.0"
     "@testing-library/dom": "npm:^10.4.2"

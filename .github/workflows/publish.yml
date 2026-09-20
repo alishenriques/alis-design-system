@@ -18,6 +18,8 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
       - run: corepack enable
+      - name: Upgrade npm (trusted publishing needs npm >= 11.5.1)
+        run: npm install -g npm@latest
       - run: yarn install --immutable
       - run: yarn lint
       - run: yarn typecheck
@@ -25,6 +27,5 @@ jobs:
       - run: yarn build
       - name: Ensure tag matches package version
         run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      # Authenticates via OIDC (npm Trusted Publisher); no NPM_TOKEN secret needed.
       - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
