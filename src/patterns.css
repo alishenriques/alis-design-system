@@ -1,0 +1,13 @@
+/*
+ * Decorative CSS utilities that don't warrant their own component.
+ * Applied as a plain class name, styled entirely from tokens.
+ */
+
+.ds-dot-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    var(--ds-color-border-strong) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}

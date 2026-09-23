@@ -27,6 +27,10 @@ export default defineConfig({
       output: {
         assetFileNames: (asset) =>
           asset.name?.endsWith(".css") ? "design-system.css" : asset.name ?? "asset",
+        // The whole library bundles into one file, and CommandPalette needs
+        // client hooks, so the bundle is client-only. Rollup strips inline
+        // "use client" directives from source files, so it's re-added here.
+        banner: '"use client";',
       },
     },
   },

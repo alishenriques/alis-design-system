@@ -1,14 +1,30 @@
 :root {
   --ds-color-bg: #0b0b0f;
+  --ds-color-bg-raised: #131318;
   --ds-color-fg: #f4f1ea;
   --ds-color-muted: #9a958c;
   --ds-color-accent: #c8ff00;
   --ds-color-accent-ink: #111111;
+  --ds-color-accent-soft: rgba(200, 255, 0, 0.1);
+  --ds-color-border: rgba(244, 241, 234, 0.1);
+  --ds-color-border-strong: rgba(244, 241, 234, 0.16);
   --ds-radius-sm: 8px;
   --ds-radius-md: 16px;
+  --ds-space-1: 0.25rem;
   --ds-space-2: 0.5rem;
   --ds-space-3: 0.75rem;
   --ds-space-4: 1rem;
-  --ds-font-sans: "Geist", "Segoe UI", sans-serif;
+  --ds-space-5: 1.5rem;
+  --ds-space-6: 2rem;
+  --ds-space-8: 3rem;
+  /*
+   * Literal fallback stacks so the design system renders sanely on its own.
+   * Consumers that self-host these faces (e.g. via next/font) should
+   * re-declare the same custom properties on :root *after* importing
+   * styles.css, so the cascade picks up the self-hosted font instead.
+   */
+  --ds-font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --ds-font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ds-font-display: "Archivo", system-ui, -apple-system, sans-serif;
   --ds-motion-fast: 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
