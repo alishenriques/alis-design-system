@@ -3,41 +3,13 @@ name: Publish to npm
 on:
   push:
     tags: ["v*"]
-  # Manual run of the `diagnose-oidc` job only (never publishes).
-  workflow_dispatch:
 
 permissions:
   contents: read
   id-token: write
 
 jobs:
-  diagnose-oidc:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Try the npm OIDC token exchange and report why it fails
-        run: |
-          echo "npm $(npm --version), node $(node --version)"
-          if [ -z "${ACTIONS_ID_TOKEN_REQUEST_URL:-}" ]; then echo "id-token env MISSING"; exit 1; fi
-          JWT=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" \
-            | node -pe 'JSON.parse(require("fs").readFileSync(0)).value')
-          # Only non-secret claims are printed; the token itself never is.
-          echo "$JWT" | cut -d. -f2 | node -e '
-            const c = JSON.parse(Buffer.from(require("fs").readFileSync(0, "utf8").trim(), "base64url"));
-            const { sub, repository, repository_owner, workflow_ref, job_workflow_ref, environment, ref, aud } = c;
-            console.log(JSON.stringify({ sub, repository, repository_owner, workflow_ref, job_workflow_ref, environment, ref, aud }, null, 1));
-          '
-          curl -sS -o resp.json -w "exchange HTTP %{http_code}\n" -X POST \
-            -H "Authorization: Bearer $JWT" \
-            "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/%40alishenriques%2Fdesign-system"
-          node -e '
-            const r = JSON.parse(require("fs").readFileSync("resp.json", "utf8"));
-            console.log(r.token ? "token received (hidden)" : JSON.stringify(r));
-          '
-
   publish:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
