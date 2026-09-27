@@ -1,6 +1,9 @@
 import "./tokens.css";
 import "./patterns.css";
 
+export { Avatar } from "./components/Avatar";
+export type { AvatarProps } from "./components/Avatar";
+
 export { Button } from "./components/Button";
 export type { ButtonProps, ButtonVariant } from "./components/Button";
 

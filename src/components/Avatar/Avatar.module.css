@@ -1,0 +1,119 @@
+.trigger {
+  display: inline-flex;
+  padding: 0;
+  border: 2px solid var(--ds-color-accent);
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--ds-color-bg-raised);
+  transition: transform var(--ds-motion-fast), box-shadow var(--ds-motion-fast);
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  transform: scale(1.03);
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ds-color-accent-soft);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 11, 15, 0.72);
+  /*
+   * No -webkit- fallback: pairing it with the unprefixed property here made
+   * Next's production CSS minifier (Lightning CSS) treat them as duplicates
+   * and drop the unprefixed one, silently disabling the blur in Chromium
+   * (verified via getComputedStyle — the bug was reproducible, not visual
+   * guesswork). Every browser this design system targets supports the
+   * unprefixed property.
+   */
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+
+.backdropVisible {
+  opacity: 1;
+}
+
+/* Sized by the `expandedSize` prop (inline style); this element only fades
+   in, so the close button (a sibling of the scaled `.circle`, not scaled
+   itself) stays crisp throughout the transition. */
+.frame {
+  position: relative;
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+
+.frameVisible {
+  opacity: 1;
+}
+
+.circle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--ds-color-accent);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.85);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.frameVisible .circle {
+  transform: scale(1);
+}
+
+.expandedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.closeButton {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--ds-color-border-strong);
+  background: var(--ds-color-bg-raised);
+  color: var(--ds-color-fg);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--ds-motion-fast), color var(--ds-motion-fast);
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  border-color: var(--ds-color-accent);
+  color: var(--ds-color-accent);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .frame,
+  .circle {
+    transition: none;
+  }
+}
