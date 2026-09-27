@@ -13,6 +13,14 @@ export type { CommandPaletteItem, CommandPaletteProps } from "./components/Comma
 export { Eyebrow } from "./components/Eyebrow";
 export type { EyebrowProps } from "./components/Eyebrow";
 
+// Re-added here: this export was lost from the committed source during a
+// commit-splitting mistake (the component files landed, this line didn't) —
+// the published 0.3.1 build only has it because it happened to be built from
+// an uncommitted working copy that still had it. Committing it now closes
+// the gap so a fresh checkout builds the same package that's actually live.
+export { LoadingButton } from "./components/LoadingButton";
+export type { LoadingButtonProps } from "./components/LoadingButton";
+
 export { Panel } from "./components/Panel";
 export type { PanelProps } from "./components/Panel";
 
