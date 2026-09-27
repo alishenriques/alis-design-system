@@ -25,4 +25,16 @@ describe("Quote", () => {
     );
     expect(container.querySelector("[class*='cursor']")).toBeNull();
   });
+
+  it("stays inline by default, and floats left/right when asked", () => {
+    const { container, rerender } = render(<Quote>Texto</Quote>);
+    const blockquote = () => container.querySelector("blockquote") as HTMLElement;
+    expect(blockquote().className).not.toMatch(/float/i);
+
+    rerender(<Quote float="left">Texto</Quote>);
+    expect(blockquote().className).toMatch(/floatLeft/);
+
+    rerender(<Quote float="right">Texto</Quote>);
+    expect(blockquote().className).toMatch(/floatRight/);
+  });
 });
