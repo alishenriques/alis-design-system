@@ -30,6 +30,9 @@ export type { PipelineBadgesProps, PipelineStep } from "./components/PipelineBad
 export { Quote } from "./components/Quote";
 export type { QuoteProps } from "./components/Quote";
 
+export { SidePanel } from "./components/SidePanel";
+export type { SidePanelProps } from "./components/SidePanel";
+
 export { StatGrid } from "./components/StatGrid";
 export type { Stat, StatGridProps } from "./components/StatGrid";
 
@@ -38,3 +41,6 @@ export type { TagListProps } from "./components/TagList";
 
 export { TerminalPrompt } from "./components/TerminalPrompt";
 export type { TerminalPromptProps } from "./components/TerminalPrompt";
+
+export { Timeline } from "./components/Timeline";
+export type { TimelineItem, TimelineProps } from "./components/Timeline";

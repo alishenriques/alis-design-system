@@ -36,9 +36,11 @@ yarn dev          # build em watch
 - `Panel` — superfície elevada com borda, com fundo em grade de pontos opcional
 - `PipelineBadges` — chips estilo pipeline de CI
 - `Quote` — citação em destaque estilo terminal (`#`/marcador customizável, cursor piscando opcional, `float` para puxar para a lateral)
+- `SidePanel` — painel lateral deslizante estilo GitKraken (`open`/`onClose` controlados, fecha no ×/Escape/clique fora)
 - `StatGrid` — grade de estatísticas
 - `TagList` — lista de tags
 - `TerminalPrompt` — linha de prompt de terminal com cursor piscando
+- `Timeline` — grafo vertical estilo GitKraken (nós empilhados e clicáveis, ligados por linhas coloridas em rotação automática)
 
 Estilos via CSS Modules e tokens `--ds-*` (`src/tokens.css`).
 
