@@ -35,6 +35,7 @@ yarn dev          # build em watch
 - `LoadingButton` — botão com estado de carregamento embutido (`isLoading`, `loadingText`)
 - `Panel` — superfície elevada com borda, com fundo em grade de pontos opcional
 - `PipelineBadges` — chips estilo pipeline de CI
+- `Quote` — citação em destaque estilo terminal (`#`/marcador customizável, cursor piscando opcional)
 - `StatGrid` — grade de estatísticas
 - `TagList` — lista de tags
 - `TerminalPrompt` — linha de prompt de terminal com cursor piscando
