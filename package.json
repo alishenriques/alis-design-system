@@ -25,7 +25,8 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepack": "yarn build"
   },
   "peerDependencies": {
     "react": "^19.0.0",

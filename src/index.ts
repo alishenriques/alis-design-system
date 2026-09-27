@@ -27,6 +27,9 @@ export type { PanelProps } from "./components/Panel";
 export { PipelineBadges } from "./components/PipelineBadges";
 export type { PipelineBadgesProps, PipelineStep } from "./components/PipelineBadges";
 
+export { Quote } from "./components/Quote";
+export type { QuoteProps } from "./components/Quote";
+
 export { StatGrid } from "./components/StatGrid";
 export type { Stat, StatGridProps } from "./components/StatGrid";
 
