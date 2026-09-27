@@ -12,10 +12,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           # No registry-url here on purpose: setup-node always writes an
           # authToken line to .npmrc from NODE_AUTH_TOKEN when it's set, even
           # if that var is empty (we don't use an NPM_TOKEN secret). An empty
