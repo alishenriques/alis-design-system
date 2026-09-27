@@ -15,7 +15,11 @@ export type TimelineProps = {
   /** The currently selected item's id, if any. */
   selectedId?: string | null;
   onSelect?: (id: string) => void;
-} & Omit<HTMLAttributes<HTMLOListElement>, "children">;
+  // "children" and "onSelect" are both re-declared above with different
+  // shapes than HTMLAttributes' own (HTMLOListElement has a native
+  // `onSelect` text-selection event) — Omit them so ours win instead of
+  // colliding.
+} & Omit<HTMLAttributes<HTMLOListElement>, "children" | "onSelect">;
 
 // Golden-angle hue rotation: whatever the list length, each node's color
 // stays visually distinct from its neighbours without a fixed-size palette
