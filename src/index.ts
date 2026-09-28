@@ -30,6 +30,9 @@ export type { PipelineBadgesProps, PipelineStep } from "./components/PipelineBad
 export { Quote } from "./components/Quote";
 export type { QuoteProps } from "./components/Quote";
 
+export { ShowcaseCard } from "./components/ShowcaseCard";
+export type { ShowcaseCardProps } from "./components/ShowcaseCard";
+
 export { SidePanel } from "./components/SidePanel";
 export type { SidePanelProps } from "./components/SidePanel";
 
