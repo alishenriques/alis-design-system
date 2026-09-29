@@ -41,7 +41,7 @@ yarn dev          # build em watch
 - `StatGrid` — grade de estatísticas
 - `TagList` — lista de tags
 - `TerminalPrompt` — linha de prompt de terminal com cursor piscando
-- `Timeline` — grafo vertical estilo GitKraken (nós empilhados e clicáveis, ligados por linhas coloridas em rotação automática)
+- `Timeline` — grafo vertical estilo GitKraken (nós empilhados e clicáveis, ligados por linhas coloridas em rotação automática); cada linha lê como um commit — nome, depois tipo e uma descrição curta opcionais na mesma linha que quebra
 
 Estilos via CSS Modules e tokens `--ds-*` (`src/tokens.css`).
 

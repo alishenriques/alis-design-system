@@ -8,6 +8,10 @@ export type TimelineItem = {
   label: string;
   /** Small square logo shown inside the node. Falls back to the label's first letter. */
   iconUrl?: string | null;
+  /** Shown next to a small tag icon, e.g. "E-Commerce" — free text, not an enum. */
+  typeLabel?: string | null;
+  /** A short one-line description shown after the type, e.g. a project summary. */
+  description?: string | null;
 };
 
 export type TimelineProps = {
@@ -31,10 +35,33 @@ function colorForIndex(index: number): string {
   return `hsl(${hue}deg 70% 60%)`;
 }
 
+/** A small generic "type" tag glyph — not tied to any specific typeLabel value, since that's free text. */
+function TagIcon() {
+  return (
+    <svg
+      className={styles.typeIcon}
+      width="12"
+      height="12"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 2h6l6 6-6 6-6-6V2Z" />
+      <circle cx="5" cy="5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 /**
  * A vertical, GitKraken-style commit graph: stacked, clickable nodes
- * connected by colored lines, in the order given. Pair with `SidePanel` for
- * the GitKraken-style sliding detail view.
+ * connected by colored lines, in the order given — each row reading like a
+ * commit line (project name, then its type and a short description on the
+ * same wrapping line, like a subject and its metadata). Pair with
+ * `SidePanel` for the GitKraken-style sliding detail view.
  */
 export function Timeline({ items, selectedId, onSelect, className, ...props }: TimelineProps) {
   const classes = [styles.list, className].filter(Boolean).join(" ");
@@ -67,7 +94,26 @@ export function Timeline({ items, selectedId, onSelect, className, ...props }: T
                   </span>
                 )}
               </span>
-              <span className={styles.label}>{item.label}</span>
+              <span className={styles.content}>
+                <span className={styles.label}>{item.label}</span>
+                {item.typeLabel && (
+                  <>
+                    <span className={styles.separator} aria-hidden="true">
+                      |
+                    </span>
+                    <span className={styles.type}>
+                      <TagIcon />
+                      {item.typeLabel}
+                    </span>
+                  </>
+                )}
+                {item.description && (
+                  <span className={styles.description}>
+                    <span aria-hidden="true">– </span>
+                    {item.description}
+                  </span>
+                )}
+              </span>
             </button>
             {index < items.length - 1 && <span className={styles.line} aria-hidden="true" />}
           </li>

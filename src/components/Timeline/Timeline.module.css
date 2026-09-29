@@ -78,10 +78,46 @@
   color: var(--timeline-color);
 }
 
+/* One wrapping "commit line": label, then | type — description, in that
+   flow order, breaking onto more lines on narrow viewports rather than a
+   rigid single line. */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--ds-space-2);
+  row-gap: 2px;
+  min-width: 0;
+}
+
 .label {
   font-size: 15px;
   font-weight: 500;
   color: var(--ds-color-fg);
+}
+
+.separator {
+  color: var(--ds-color-border-strong);
+}
+
+.type {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--ds-font-mono);
+  font-size: 12px;
+  color: var(--timeline-color);
+  white-space: nowrap;
+}
+
+.typeIcon {
+  flex: none;
+}
+
+.description {
+  font-size: 13px;
+  color: var(--ds-color-muted);
+  overflow-wrap: anywhere;
 }
 
 .button:focus-visible {

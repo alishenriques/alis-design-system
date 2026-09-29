@@ -48,4 +48,23 @@ describe("Timeline", () => {
     expect(screen.getAllByRole("button")).toHaveLength(1);
     expect(container.querySelectorAll("[class*='line']")).toHaveLength(0);
   });
+
+  it("shows the type and description on the same line as the label, when given", () => {
+    render(
+      <Timeline
+        items={[{ id: "a", label: "Respire C'alma", typeLabel: "E-Commerce", description: "Velas terapêuticas." }]}
+      />,
+    );
+    expect(screen.getByText("E-Commerce")).toBeInTheDocument();
+    expect(screen.getByText(/Velas terapêuticas\./)).toBeInTheDocument();
+    // Real content, not decorative — included in the accessible name too.
+    expect(
+      screen.getByRole("button", { name: /Respire C'alma.*E-Commerce.*Velas terapêuticas\./ }),
+    ).toBeInTheDocument();
+  });
+
+  it("omits the type and description when not given", () => {
+    render(<Timeline items={[{ id: "a", label: "Project A" }]} />);
+    expect(screen.getByRole("button", { name: "Project A" })).toBeInTheDocument();
+  });
 });
