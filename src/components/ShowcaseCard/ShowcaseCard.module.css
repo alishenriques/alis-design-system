@@ -1,6 +1,6 @@
 .card {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border: 1px solid var(--ds-color-border-strong);
   border-radius: var(--ds-radius-md);
@@ -16,14 +16,13 @@
   transform: translateY(-6px);
   border-color: var(--ds-color-accent);
   box-shadow:
-    0 20px 40px -16px rgba(0, 0, 0, 0.5),
+    0 20px 40px -16px rgba(0, 0, 0, 0.55),
     0 0 0 1px var(--ds-color-accent-soft);
 }
 
 .imageWrap {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
   background: var(--ds-color-bg);
 }
 
@@ -46,71 +45,83 @@
   transform: scale(1.06);
 }
 
-/* A "viewfinder" reticle: four corner brackets, offset and invisible at
-   rest, that snap out to the true corners on hover/focus — a small nod to
-   the "engineering/dev-tool" motif elsewhere in the design system (dot-grid,
-   terminal prompts) without adding a second visual language. */
-.corner {
+/* Browser-chrome bar, pinned to the top — echoes the browser-window mockups
+   used elsewhere for these same projects' case studies. */
+.chrome {
   position: absolute;
-  width: 22px;
-  height: 22px;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity var(--ds-motion-fast),
-    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.cornerTopLeft {
-  top: 10px;
-  left: 10px;
-  border-top: 2px solid var(--ds-color-accent);
-  border-left: 2px solid var(--ds-color-accent);
-  transform: translate(6px, 6px);
-}
-
-.cornerTopRight {
-  top: 10px;
-  right: 10px;
-  border-top: 2px solid var(--ds-color-accent);
-  border-right: 2px solid var(--ds-color-accent);
-  transform: translate(-6px, 6px);
-}
-
-.cornerBottomLeft {
-  bottom: 10px;
-  left: 10px;
-  border-bottom: 2px solid var(--ds-color-accent);
-  border-left: 2px solid var(--ds-color-accent);
-  transform: translate(6px, -6px);
-}
-
-.cornerBottomRight {
-  bottom: 10px;
-  right: 10px;
-  border-bottom: 2px solid var(--ds-color-accent);
-  border-right: 2px solid var(--ds-color-accent);
-  transform: translate(-6px, -6px);
-}
-
-.card:hover .corner,
-.card:focus-within .corner {
-  opacity: 1;
-  transform: translate(0, 0);
-}
-
-.body {
+  inset: 0 0 auto 0;
+  z-index: 1;
   display: flex;
-  flex: 1;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: 10px var(--ds-space-3);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
+  flex: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background-color var(--ds-motion-fast);
+}
+
+/* Classic macOS traffic-light colors — a deliberate literal (not a --ds-*
+   token): this is mimicking one specific, universally recognized real-world
+   affordance, not a themeable brand color. */
+.card:hover .dotRed,
+.card:focus-within .dotRed {
+  background: #ff5f56;
+}
+
+.card:hover .dotYellow,
+.card:focus-within .dotYellow {
+  background: #ffbd2e;
+}
+
+.card:hover .dotGreen,
+.card:focus-within .dotGreen {
+  background: #27c93f;
+}
+
+.siteLabel {
+  font-family: var(--ds-font-mono);
+  font-size: 11px;
+  color: var(--ds-color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Bottom info panel: always shows title + tags over a scrim; the
+   description/footer reveal grows this panel upward within the card's
+   fixed (aspect-square) bounds — it never changes the card's own height. */
+.info {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  display: flex;
   flex-direction: column;
-  gap: var(--ds-space-3);
-  padding: var(--ds-space-5);
+  padding: var(--ds-space-4);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.8) 55%, transparent 100%);
+}
+
+.infoHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2);
 }
 
 .title {
   margin: 0;
   font-family: var(--ds-font-sans);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ds-color-fg);
 }
@@ -119,22 +130,50 @@
   margin: 0;
 }
 
+/* The reveal itself: grid-template-rows 0fr -> 1fr animates to the
+   content's natural height without knowing it up front. */
+.revealWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .revealWrap,
+.card:focus-within .revealWrap {
+  grid-template-rows: 1fr;
+}
+
+/* No hover on touch — there's nothing to reveal it, so it stays open. */
+@media (hover: none) {
+  .revealWrap {
+    grid-template-rows: 1fr;
+  }
+}
+
+.revealInner {
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  padding-top: var(--ds-space-3);
+}
+
 .description {
   margin: 0;
-  flex: 1;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--ds-color-muted);
 }
 
 .footer {
-  margin-top: var(--ds-space-2);
+  flex: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card,
   .image,
-  .corner {
+  .revealWrap {
     transition: none;
   }
 
@@ -145,11 +184,6 @@
 
   .card:hover .image,
   .card:focus-within .image {
-    transform: none;
-  }
-
-  .card:hover .corner,
-  .card:focus-within .corner {
     transform: none;
   }
 }

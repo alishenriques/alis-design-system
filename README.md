@@ -36,7 +36,7 @@ yarn dev          # build em watch
 - `Panel` — superfície elevada com borda, com fundo em grade de pontos opcional
 - `PipelineBadges` — chips estilo pipeline de CI
 - `Quote` — citação em destaque estilo terminal (`#`/marcador customizável, cursor piscando opcional, `float` para puxar para a lateral)
-- `ShowcaseCard` — card de mídia (imagem, título, tags, descrição, rodapé livre para o link) com animação de hover estilo "viewfinder" (cantos que se encaixam, imagem que ganha cor)
+- `ShowcaseCard` — card de mídia quadrado emoldurado como janela de navegador (pontinhos, barra de endereço); título/tags sempre visíveis sobre a imagem, descrição e rodapé (link livre) escondidos e revelados no hover/foco (sempre abertos em telas sem hover)
 - `SidePanel` — painel lateral deslizante estilo GitKraken (`open`/`onClose` controlados, fecha no ×/Escape/clique fora)
 - `StatGrid` — grade de estatísticas
 - `TagList` — lista de tags
