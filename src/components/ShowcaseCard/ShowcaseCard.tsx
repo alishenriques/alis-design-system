@@ -1,5 +1,4 @@
 import type { HTMLAttributes, ReactNode } from "react";
-import { TagList } from "../TagList";
 import styles from "./ShowcaseCard.module.css";
 
 export type ShowcaseCardProps = {
@@ -62,7 +61,18 @@ export function ShowcaseCard({
 
       <div className={styles.body}>
         <h3 className={styles.title}>{title}</h3>
-        {tags.length > 0 && <TagList tags={tags} className={styles.tags} />}
+        {tags.length > 0 && (
+          // Not the DS TagList: this card needs a visibly smaller, boxier chip
+          // to keep tags on one line at this card's narrow width — TagList's
+          // own look is shared by every other consumer and stays as-is.
+          <ul className={styles.tags}>
+            {tags.map((tag) => (
+              <li key={tag} className={styles.tag}>
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className={styles.revealWrap}>
           <div className={styles.revealInner}>
