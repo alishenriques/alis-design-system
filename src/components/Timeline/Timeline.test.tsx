@@ -67,4 +67,12 @@ describe("Timeline", () => {
     render(<Timeline items={[{ id: "a", label: "Project A" }]} />);
     expect(screen.getByRole("button", { name: "Project A" })).toBeInTheDocument();
   });
+
+  it("keeps real spacing between label, type and description in the accessible name", () => {
+    // Regression test: the visual "|"/"–" separators are aria-hidden and
+    // contribute no whitespace of their own, so relying on child-node name
+    // computation ran adjacent words together ("ASummary", not "A Summary").
+    render(<Timeline items={[{ id: "a", label: "A", typeLabel: "T", description: "D" }]} />);
+    expect(screen.getByRole("button", { name: "A — T — D" })).toBeInTheDocument();
+  });
 });

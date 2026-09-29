@@ -35,6 +35,19 @@ function colorForIndex(index: number): string {
   return `hsl(${hue}deg 70% 60%)`;
 }
 
+/**
+ * A properly spaced, natural-language accessible name for the whole row —
+ * built explicitly rather than left to child-node name computation, because
+ * an aria-hidden separator (the "|"/"–" glyphs) contributes no whitespace of
+ * its own to that computation either: two adjacent visible spans end up
+ * concatenated with no space between them at all (confirmed via a real
+ * accessibility-tree dump: "ASummary", not "A Summary"). The `.content`
+ * span is aria-hidden below so only this string is ever read.
+ */
+function accessibleLabel(item: TimelineItem): string {
+  return [item.label, item.typeLabel, item.description].filter(Boolean).join(" — ");
+}
+
 /** A small generic "type" tag glyph — not tied to any specific typeLabel value, since that's free text. */
 function TagIcon() {
   return (
@@ -84,35 +97,27 @@ export function Timeline({ items, selectedId, onSelect, className, ...props }: T
               className={styles.button}
               onClick={() => onSelect?.(item.id)}
               aria-pressed={selected}
+              aria-label={accessibleLabel(item)}
             >
-              <span className={nodeClasses}>
+              <span className={nodeClasses} aria-hidden="true">
                 {item.iconUrl ? (
                   <img src={item.iconUrl} alt="" className={styles.icon} loading="lazy" />
                 ) : (
-                  <span className={styles.fallback} aria-hidden="true">
-                    {item.label.charAt(0).toUpperCase()}
-                  </span>
+                  <span className={styles.fallback}>{item.label.charAt(0).toUpperCase()}</span>
                 )}
               </span>
-              <span className={styles.content}>
+              <span className={styles.content} aria-hidden="true">
                 <span className={styles.label}>{item.label}</span>
                 {item.typeLabel && (
                   <>
-                    <span className={styles.separator} aria-hidden="true">
-                      |
-                    </span>
+                    <span className={styles.separator}>|</span>
                     <span className={styles.type}>
                       <TagIcon />
                       {item.typeLabel}
                     </span>
                   </>
                 )}
-                {item.description && (
-                  <span className={styles.description}>
-                    <span aria-hidden="true">– </span>
-                    {item.description}
-                  </span>
-                )}
+                {item.description && <span className={styles.description}>– {item.description}</span>}
               </span>
             </button>
             {index < items.length - 1 && <span className={styles.line} aria-hidden="true" />}
