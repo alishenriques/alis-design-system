@@ -23,13 +23,15 @@ export type ShowcaseCardProps = {
 } & Omit<HTMLAttributes<HTMLElement>, "children">;
 
 /**
- * A square media card framed like a browser window (traffic-light dots, an
- * address bar) — the image is the whole card. Title and up to a few tags
- * sit on a bottom scrim over the image at rest; the description and footer
- * link stay collapsed and slide open on hover/focus, so the card reads as
- * a compact thumbnail until it's actually interacted with. Always open on
- * touch devices (`hover: none`), since there's no hover to reveal it.
- * Motion is skipped under `prefers-reduced-motion`.
+ * A media card: the image sits up top, framed like a browser window
+ * (traffic-light dots, an address bar) — the title and tags live below it
+ * on the card's own solid background, always legible regardless of what's
+ * in the screenshot. The description and footer link start collapsed and
+ * slide open on hover/focus (CSS `grid-template-rows: 0fr → 1fr`, sized to
+ * fit whatever content it's given), so the card stays compact at rest and
+ * grows to reveal more — always open on touch (`hover: none`), since
+ * there's no hover there to trigger it. Motion is skipped under
+ * `prefers-reduced-motion`.
  */
 export function ShowcaseCard({
   imageUrl,
@@ -46,24 +48,21 @@ export function ShowcaseCard({
 
   return (
     <article className={classes} {...props}>
-      <div className={styles.imageWrap}>
+      <div className={styles.mediaWrap}>
         <img src={imageUrl} alt={imageAlt} className={styles.image} loading="lazy" />
-      </div>
-
-      <div className={styles.chrome} aria-hidden="true">
-        <span className={styles.dots}>
-          <span className={`${styles.dot} ${styles.dotRed}`} />
-          <span className={`${styles.dot} ${styles.dotYellow}`} />
-          <span className={`${styles.dot} ${styles.dotGreen}`} />
-        </span>
-        {siteLabel && <span className={styles.siteLabel}>{siteLabel}</span>}
-      </div>
-
-      <div className={styles.info}>
-        <div className={styles.infoHeader}>
-          <h3 className={styles.title}>{title}</h3>
-          {tags.length > 0 && <TagList tags={tags} className={styles.tags} />}
+        <div className={styles.chrome} aria-hidden="true">
+          <span className={styles.dots}>
+            <span className={`${styles.dot} ${styles.dotRed}`} />
+            <span className={`${styles.dot} ${styles.dotYellow}`} />
+            <span className={`${styles.dot} ${styles.dotGreen}`} />
+          </span>
+          {siteLabel && <span className={styles.siteLabel}>{siteLabel}</span>}
         </div>
+      </div>
+
+      <div className={styles.body}>
+        <h3 className={styles.title}>{title}</h3>
+        {tags.length > 0 && <TagList tags={tags} className={styles.tags} />}
 
         <div className={styles.revealWrap}>
           <div className={styles.revealInner}>

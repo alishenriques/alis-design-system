@@ -1,6 +1,6 @@
 .card {
-  position: relative;
-  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--ds-color-border-strong);
   border-radius: var(--ds-radius-md);
@@ -20,9 +20,12 @@
     0 0 0 1px var(--ds-color-accent-soft);
 }
 
-.imageWrap {
-  position: absolute;
-  inset: 0;
+/* Close to the source screenshots' own 1440x900 shape, so object-fit:cover
+   crops as little as possible. */
+.mediaWrap {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
   background: var(--ds-color-bg);
 }
 
@@ -45,8 +48,11 @@
   transform: scale(1.06);
 }
 
-/* Browser-chrome bar, pinned to the top — echoes the browser-window mockups
-   used elsewhere for these same projects' case studies. */
+/* Browser-chrome bar, pinned to the top of the image — echoes the
+   browser-window mockups already used for these same projects' case
+   studies. A solid bar, not a gradient over the image: real browser chrome
+   is never see-through, and a solid bar guarantees the address text never
+   collides with whatever the screenshot itself shows at its very top. */
 .chrome {
   position: absolute;
   inset: 0 0 auto 0;
@@ -54,8 +60,9 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-2);
-  padding: 10px var(--ds-space-3);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+  padding: 8px var(--ds-space-3);
+  background: var(--ds-color-bg);
+  border-bottom: 1px solid var(--ds-color-border);
 }
 
 .dots {
@@ -68,7 +75,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--ds-color-border-strong);
   transition: background-color var(--ds-motion-fast);
 }
 
@@ -99,23 +106,14 @@
   white-space: nowrap;
 }
 
-/* Bottom info panel: always shows title + tags over a scrim; the
-   description/footer reveal grows this panel upward within the card's
-   fixed (aspect-square) bounds — it never changes the card's own height. */
-.info {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 1;
+/* Below the image, on the card's own solid background — always legible,
+   unlike text overlaid on an arbitrary screenshot. */
+.body {
   display: flex;
-  flex-direction: column;
-  padding: var(--ds-space-4);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.8) 55%, transparent 100%);
-}
-
-.infoHeader {
-  display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--ds-space-2);
+  padding: var(--ds-space-4);
 }
 
 .title {
@@ -131,7 +129,8 @@
 }
 
 /* The reveal itself: grid-template-rows 0fr -> 1fr animates to the
-   content's natural height without knowing it up front. */
+   content's natural height without knowing it up front — the card grows to
+   fit it (no fixed card height to overflow/clip against). */
 .revealWrap {
   display: grid;
   grid-template-rows: 0fr;
@@ -156,7 +155,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-3);
-  padding-top: var(--ds-space-3);
+  padding-top: var(--ds-space-2);
 }
 
 .description {
