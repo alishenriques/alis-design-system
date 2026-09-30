@@ -28,7 +28,13 @@
 
 .button {
   display: flex;
-  align-items: center;
+  /* flex-start, not center: .line's `top` is hardcoded to the node's own
+     height (assuming the node sits flush at the row's top edge). Once a
+     row's content (title + type + description) wraps taller than the
+     node, center-aligning would push the node down to stay centered
+     against it, but the line wouldn't know to start lower too — so it'd
+     visibly start above the node's new (lower) position, overlapping it. */
+  align-items: flex-start;
   gap: var(--ds-space-4);
   width: 100%;
   background: none;
