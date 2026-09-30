@@ -24,6 +24,7 @@
   width: 2px;
   background: var(--timeline-color);
   opacity: 0.55;
+  z-index: 1;
 }
 
 .button {
@@ -55,8 +56,8 @@
   border-radius: 50%;
   background: var(--ds-color-bg-raised);
   border: 2px solid var(--timeline-color);
-  box-shadow: 0 0 0 4px var(--ds-color-bg);
   overflow: hidden;
+  z-index: 2;
   transition:
     transform var(--ds-motion-fast),
     box-shadow var(--ds-motion-fast);
