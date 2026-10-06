@@ -1,8 +1,8 @@
 # @alishenriques/design-system
 
-Biblioteca de componentes React isolada, usada no [portfólio](https://github.com/alishenriques/alis-portfolio) e reaproveitável em projetos futuros. Publicada no npm público.
+Biblioteca de componentes React isolada, usada no [portfólio](https://github.com/alishenriques/alis-portfolio), no futuro site de vendas de serviços autônomos e reaproveitável em outros projetos. Publicada no npm público.
 
-Arquitetura completa e convenções: [`docs/ai`](https://github.com/alishenriques/alis-portfolio/tree/main/docs/ai) no repositório principal.
+Arquitetura completa e convenções: [`docs/ai`](https://github.com/alishenriques/alis-portfolio/tree/main/docs/ai) no repositório principal. Mudanças grandes vão por PR detalhada e só entram na `main` com aprovação do Alisson.
 
 ## Uso
 
