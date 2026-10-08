@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, HTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import styles from "./Timeline.module.css";
 
 export type TimelineItem = {
@@ -12,6 +12,24 @@ export type TimelineItem = {
   typeLabel?: string | null;
   /** A short one-line description shown after the type, e.g. a project summary. */
   description?: string | null;
+  /**
+   * Highlights this row: a bigger node with a thicker border and bigger
+   * text, e.g. the newest entry at the top of the list. Every other row
+   * keeps its node centred on the same rail, so the connecting line stays
+   * straight.
+   */
+  featured?: boolean;
+  /**
+   * A row of small icons under the text, e.g. the main technologies of a
+   * project. Each `label` is shown as a tooltip and added to the row's
+   * accessible name; `icon` is any decorative element (an SVG component).
+   */
+  badges?: TimelineBadge[];
+};
+
+export type TimelineBadge = {
+  label: string;
+  icon: ReactNode;
 };
 
 export type TimelineProps = {
@@ -45,7 +63,8 @@ function colorForIndex(index: number): string {
  * span is aria-hidden below so only this string is ever read.
  */
 function accessibleLabel(item: TimelineItem): string {
-  return [item.label, item.typeLabel, item.description].filter(Boolean).join(" — ");
+  const badges = item.badges?.length ? item.badges.map((badge) => badge.label).join(", ") : null;
+  return [item.label, item.typeLabel, item.description, badges].filter(Boolean).join(" — ");
 }
 
 /** A small generic "type" tag glyph — not tied to any specific typeLabel value, since that's free text. */
@@ -73,11 +92,14 @@ function TagIcon() {
  * A vertical, GitKraken-style commit graph: stacked, clickable nodes
  * connected by colored lines, in the order given — each row reading like a
  * commit line (project name, then its type and a short description on the
- * same wrapping line, like a subject and its metadata). Pair with
+ * same wrapping line, like a subject and its metadata). An item can be
+ * `featured` (bigger node and text) and carry a row of icon `badges`. Pair with
  * `SidePanel` for the GitKraken-style sliding detail view.
  */
 export function Timeline({ items, selectedId, onSelect, className, ...props }: TimelineProps) {
-  const classes = [styles.list, className].filter(Boolean).join(" ");
+  const classes = [styles.list, items.some((item) => item.featured) && styles.listWithFeatured, className]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <ol className={classes} {...props}>
@@ -89,7 +111,7 @@ export function Timeline({ items, selectedId, onSelect, className, ...props }: T
         return (
           <li
             key={item.id}
-            className={styles.row}
+            className={[styles.row, item.featured && styles.rowFeatured].filter(Boolean).join(" ")}
             style={{ "--timeline-color": color } as CSSProperties}
           >
             <button
@@ -118,6 +140,15 @@ export function Timeline({ items, selectedId, onSelect, className, ...props }: T
                   </>
                 )}
                 {item.description && <span className={styles.description}>– {item.description}</span>}
+                {item.badges && item.badges.length > 0 && (
+                  <span className={styles.badges}>
+                    {item.badges.map((badge) => (
+                      <span key={badge.label} className={styles.badge} title={badge.label}>
+                        {badge.icon}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </span>
             </button>
             {index < items.length - 1 && <span className={styles.line} aria-hidden="true" />}

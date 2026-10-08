@@ -46,4 +46,4 @@ export { TerminalPrompt } from "./components/TerminalPrompt";
 export type { TerminalPromptProps } from "./components/TerminalPrompt";
 
 export { Timeline } from "./components/Timeline";
-export type { TimelineItem, TimelineProps } from "./components/Timeline";
+export type { TimelineBadge, TimelineItem, TimelineProps } from "./components/Timeline";

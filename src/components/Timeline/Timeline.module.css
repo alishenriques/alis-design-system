@@ -1,5 +1,8 @@
 .list {
   --timeline-node-size: 48px;
+  /* Width of the column every node is centred in. Equal to the node size
+     unless a featured row needs a wider one (.listWithFeatured). */
+  --timeline-rail-size: var(--timeline-node-size);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -7,9 +10,19 @@
   flex-direction: column;
 }
 
+.listWithFeatured {
+  --timeline-rail-size: 80px;
+}
+
 .row {
   position: relative;
   padding-bottom: var(--ds-space-5);
+}
+
+.rowFeatured {
+  --timeline-node-size: 80px;
+  --timeline-node-border: 3px;
+  padding-bottom: var(--ds-space-6);
 }
 
 .row:last-child {
@@ -20,7 +33,7 @@
   position: absolute;
   top: var(--timeline-node-size);
   bottom: 0;
-  left: calc(var(--timeline-node-size) / 2 - 1px);
+  left: calc(var(--timeline-rail-size) / 2 - 1px);
   width: 2px;
   background: var(--timeline-color);
   opacity: 0.55;
@@ -53,9 +66,12 @@
   justify-content: center;
   width: var(--timeline-node-size);
   height: var(--timeline-node-size);
+  /* Centres a smaller node on a wider rail, so all nodes and the line
+     share one vertical axis and every row's text starts at the same x. */
+  margin-inline: calc((var(--timeline-rail-size) - var(--timeline-node-size)) / 2);
   border-radius: 50%;
   background: var(--ds-color-bg-raised);
-  border: 2px solid var(--timeline-color);
+  border: var(--timeline-node-border, 2px) solid var(--timeline-color);
   overflow: hidden;
   z-index: 2;
   transition:
@@ -125,6 +141,42 @@
   font-size: 13px;
   color: var(--ds-color-muted);
   overflow-wrap: anywhere;
+}
+
+.rowFeatured .content {
+  row-gap: var(--ds-space-1);
+}
+
+.rowFeatured .fallback {
+  font-size: 28px;
+}
+
+.rowFeatured .label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.rowFeatured .type {
+  font-size: 14px;
+}
+
+.rowFeatured .description {
+  font-size: 15px;
+}
+
+/* Own line under the commit line: flex-basis 100% forces the wrap. */
+.badges {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-3);
+  margin-top: var(--ds-space-2);
+}
+
+.badge {
+  display: inline-flex;
+  line-height: 0;
 }
 
 .button:focus-visible {

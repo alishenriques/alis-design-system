@@ -75,4 +75,44 @@ describe("Timeline", () => {
     render(<Timeline items={[{ id: "a", label: "A", typeLabel: "T", description: "D" }]} />);
     expect(screen.getByRole("button", { name: "A — T — D" })).toBeInTheDocument();
   });
+
+  it("marks only the featured row, and widens the rail for every row when one is featured", () => {
+    const { container } = render(<Timeline items={[{ ...items[0], featured: true }, items[1]]} />);
+    const rows = container.querySelectorAll("li");
+    expect(rows[0].className).toMatch(/rowFeatured/);
+    expect(rows[1].className).not.toMatch(/rowFeatured/);
+    expect(container.querySelector("ol")?.className).toMatch(/listWithFeatured/);
+  });
+
+  it("keeps the normal rail when nothing is featured", () => {
+    const { container } = render(<Timeline items={items} />);
+    expect(container.querySelector("ol")?.className).not.toMatch(/listWithFeatured/);
+  });
+
+  it("renders badges with a tooltip each and adds their labels to the accessible name", () => {
+    render(
+      <Timeline
+        items={[
+          {
+            id: "a",
+            label: "A",
+            typeLabel: "T",
+            badges: [
+              { label: "React", icon: <svg data-testid="react-icon" /> },
+              { label: "GraphQL", icon: <svg data-testid="graphql-icon" /> },
+            ],
+          },
+        ]}
+      />,
+    );
+    expect(screen.getByTestId("react-icon")).toBeInTheDocument();
+    expect(screen.getByTitle("GraphQL")).toContainElement(screen.getByTestId("graphql-icon"));
+    expect(screen.getByRole("button", { name: "A — T — React, GraphQL" })).toBeInTheDocument();
+  });
+
+  it("renders no badge row for an empty badges list", () => {
+    const { container } = render(<Timeline items={[{ id: "a", label: "A", badges: [] }]} />);
+    expect(container.querySelector("[class*='badges']")).toBeNull();
+    expect(screen.getByRole("button", { name: "A" })).toBeInTheDocument();
+  });
 });

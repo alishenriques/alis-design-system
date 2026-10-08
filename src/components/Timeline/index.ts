@@ -1,2 +1,2 @@
 export { Timeline } from "./Timeline";
-export type { TimelineItem, TimelineProps } from "./Timeline";
+export type { TimelineBadge, TimelineItem, TimelineProps } from "./Timeline";
