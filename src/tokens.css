@@ -6,6 +6,9 @@
   --ds-color-accent: #c8ff00;
   --ds-color-accent-ink: #111111;
   --ds-color-accent-soft: rgba(200, 255, 0, 0.1);
+  /* Secondary accent (blue): for moments that step out of the main flow, like an AI section or an error page. */
+  --ds-color-secondary: #38bdf8;
+  --ds-color-secondary-soft: rgba(56, 189, 248, 0.1);
   --ds-color-border: rgba(244, 241, 234, 0.1);
   --ds-color-border-strong: rgba(244, 241, 234, 0.16);
   --ds-radius-sm: 8px;
