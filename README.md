@@ -43,7 +43,7 @@ yarn dev          # build em watch
 - `TerminalPrompt` — linha de prompt de terminal com cursor piscando
 - `Timeline` — grafo vertical estilo GitKraken (nós empilhados e clicáveis, ligados por linhas coloridas em rotação automática); cada linha lê como um commit — nome, depois tipo e uma descrição curta opcionais na mesma linha que quebra; um item pode vir em destaque (`featured`: nó e textos maiores, borda mais grossa) e com uma linha de ícones (`badges`, ex.: tecnologias)
 
-Estilos via CSS Modules e tokens `--ds-*` (`src/tokens.css`).
+Estilos via CSS Modules e tokens `--ds-*` (`src/tokens.css`). Cores de destaque: `--ds-color-accent` (lime, o principal) e `--ds-color-secondary` (azul, para momentos fora do fluxo principal), cada uma com sua variante `-soft` para fundos.
 
 ## Convenção: quando um componente entra aqui
 
