@@ -11,6 +11,8 @@ describe("tokens.css", () => {
     ["--ds-color-accent", "#c8ff00"],
     ["--ds-color-secondary", "#38bdf8"],
     ["--ds-color-secondary-soft", "rgba(56, 189, 248, 0.1)"],
+    ["--ds-color-tertiary", "#ff3ea5"],
+    ["--ds-color-tertiary-soft", "rgba(255, 62, 165, 0.1)"],
   ])("declares %s", (name, value) => {
     expect(tokens).toContain(`${name}: ${value};`);
   });
